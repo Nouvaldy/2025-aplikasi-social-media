@@ -1,4 +1,5 @@
 import api from "../../utils/api";
+import { hideLoading, showLoading } from "react-redux-loading-bar";
 
 const ActionType = {
   RECEIVE_TALKS: "RECEIVE_TALKS",
@@ -37,17 +38,23 @@ function toggleLikeTalkActionCreator({ talkId, userId }) {
 //fungsi thunk
 function asyncAddTalk({ text, replyTo = "" }) {
   return async (dispatch) => {
+    dispatch(showLoading());
+
     try {
       const talk = await api.createTalk({ text, replyTo });
       dispatch(addTalksActionCreator(talk));
     } catch (error) {
       alert(error.message);
     }
+
+    dispatch(hideLoading());
   };
 }
 
 function asyncToggleLikeTalk({ talkId }) {
   return async (dispatch, getState) => {
+    dispatch(showLoading());
+
     const { authUser } = getState();
     dispatch(toggleLikeTalkActionCreator({ talkId, userId: authUser.id })); //teknik optimistically apply action
 
@@ -57,6 +64,8 @@ function asyncToggleLikeTalk({ talkId }) {
       alert(error.message);
       dispatch(toggleLikeTalkActionCreator({ talkId, userId: authUser.id })); //teknik optimistically apply action
     }
+
+    dispatch(hideLoading());
   };
 }
 
