@@ -13,7 +13,7 @@ const store = configureStore({
     talkDetail: talkDetailReducer,
     talks: talksReducer,
     users: usersReducer,
-    loadingBarReducer,
+    loadingBar: loadingBarReducer,
   },
 });
 

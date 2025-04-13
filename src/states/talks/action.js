@@ -16,7 +16,7 @@ function receiveTalksActionCreator(talks) {
   };
 }
 
-function addTalksActionCreator(talk) {
+function addTalkActionCreator(talk) {
   return {
     type: ActionType.ADD_TALK,
     payload: {
@@ -42,7 +42,7 @@ function asyncAddTalk({ text, replyTo = "" }) {
 
     try {
       const talk = await api.createTalk({ text, replyTo });
-      dispatch(addTalksActionCreator(talk));
+      dispatch(addTalkActionCreator(talk));
     } catch (error) {
       alert(error.message);
     }
@@ -51,7 +51,7 @@ function asyncAddTalk({ text, replyTo = "" }) {
   };
 }
 
-function asyncToggleLikeTalk({ talkId }) {
+function asyncToggleLikeTalk(talkId) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
 
@@ -72,7 +72,7 @@ function asyncToggleLikeTalk({ talkId }) {
 export {
   ActionType,
   receiveTalksActionCreator,
-  addTalksActionCreator,
+  addTalkActionCreator,
   toggleLikeTalkActionCreator,
   asyncAddTalk,
   asyncToggleLikeTalk,

@@ -10,13 +10,13 @@ function talksReducer(talks = [], action = {}) {
       return talks.map((talk) => {
         if (talk.id === action.payload.talkId) {
           return {
-            ...talks,
+            ...talk,
             likes: talk.likes.includes(action.payload.userId)
               ? talk.likes.filter((id) => id !== action.payload.userId)
-              : talk.likes.concat([action.payload.userId]), //kenapa harus pakai array?
+              : [...talk.likes, action.payload.userId],
           };
         }
-        return talks;
+        return talk;
       });
     default:
       return talks;
